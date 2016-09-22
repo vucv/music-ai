@@ -1,0 +1,65 @@
+  <!-- navbar -->
+  <div data-ng-include=" 'tpl/blocks/header.music.html' " class="app-header box-shadow navbar">
+  </div>
+  <!-- / navbar -->
+
+  <!-- menu -->
+  <div data-ng-include=" 'tpl/blocks/aside.music.html' " class="app-aside hidden-xs {{app.settings.asideColor}}">
+  </div>
+  <!-- / menu -->
+
+  <!-- content -->
+  <div class="app-content">
+
+    <div ui-butterbar></div>
+    <a href class="off-screen-toggle hide" ui-toggle-class="off-screen" data-target=".app-aside" ></a>
+    <div class="app-content-body fade-in-up bg-white-only" ui-view>
+      <p>Search demo :</p>
+      <p>BXH</p>
+      <p>truong vu</p>
+      <div class="col w-full bg-white-only b-l bg-auto no-border-xs" >
+        <div class="form-group">
+          <div class="input-group w-xxl search">
+            <input type="text" ng-model="config.searchData" class="form-control input-sm bg-light no-border padder ng-pristine ng-valid ng-empty ng-touched" placeholder="Search songs and artists..." aria-autocomplete="list" aria-expanded="false" aria-owns="typeahead-16-2068" aria-invalid="false">
+              <span class="input-group-btn">
+                <button ng-click="changeSource()" class="btn btn-sm bg-info"><i class="fa fa-search"></i></button>
+              </span>
+          </div>
+        </div>
+      </div>
+
+      <!--Playlist-->
+      <div class="col w-xxl bg-light dker bg-auto search" >
+        <h4 class="m-n wrapper">Playlist {{config.searchData}}</h4>
+        <ul class="list-group no-radius no-border no-bg list-group-lg">
+          <li class="list-group-item {{active==$index?'active':''}}" ng-repeat="audio in audios">
+            <div class="pull-right m-l">
+              <a class="m-r-sm"><i class="icon-cloud-download"></i></a>
+              <a class="m-r-sm"><i class="icon-plus"></i></a>
+              <a><i class="icon-close"></i></a>
+            </div>
+            <a class="m-r-sm pull-left" >
+              <i class="icon-control-play {{active==$index?'text-active':''}}" ng-click="setActive($index)"></i>
+              <i class="icon-control-pause {{active!=$index?'text-active':''}}"></i>
+            </a>
+            <div class="clear text-ellipsis">
+              <span>{{audio.title}}</span>
+              <span>-- {{audio.artist}}</span>
+              <span class="text-muted"> -- 04:35</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- /content -->
+
+  <!-- footer -->
+  <div class="app-footer app-footer-fixed" data-ng-include=" 'tpl/music.player.html' ">
+  </div>
+  <!-- / footer -->
+
+  <div data-ng-include=" 'tpl/blocks/settings.html' " class="settings panel panel-default">
+  </div>
