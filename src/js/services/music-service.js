@@ -28,7 +28,7 @@ angular.module('music.services',[])
 
         var dataSample = {
             "BXH": {
-                "playStatus": "Play",
+                "intent": "Play",
                 "playlist": [
                     {
                         title: "Chúng Ta Không Thuộc Về Nhau",
@@ -45,7 +45,7 @@ angular.module('music.services',[])
                 ]
             },
             "truong vu": {
-                "playStatus": "Play",
+                "intent": "Play",
                 "playlist": [
                     {
                         title: "Nghèo",

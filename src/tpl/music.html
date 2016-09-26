@@ -1,27 +1,30 @@
   <!-- navbar -->
-  <div data-ng-include=" 'tpl/blocks/header.music.html' " class="app-header box-shadow navbar">
+  <div data-ng-include=" 'tpl/blocks/header.music.html' " class="app-header box-shadow navbar bg-light">
   </div>
   <!-- / navbar -->
 
   <!-- menu -->
-  <div data-ng-include=" 'tpl/blocks/aside.music.html' " class="app-aside hidden-xs {{app.settings.asideColor}}">
-  </div>
+  <!--<div data-ng-include=" 'tpl/blocks/aside.music.html' " class="app-aside hidden-xs {{app.settings.asideColor}}">-->
+  <!--</div>-->
   <!-- / menu -->
 
   <!-- content -->
-  <div class="app-content">
+  <div class="">
 
     <div ui-butterbar></div>
     <a href class="off-screen-toggle hide" ui-toggle-class="off-screen" data-target=".app-aside" ></a>
     <div class="app-content-body fade-in-up bg-white-only" ui-view>
-      <p>Search demo :</p>
-      <p>BXH</p>
-      <p>truong vu</p>
+      <div style="position: absolute;">
+        <p>Search demo :</p>
+        <p>BXH</p>
+        <p>truong vu</p>
+      </div>
       <div class="col w-full bg-white-only b-l bg-auto no-border-xs" >
-        <div class="form-group">
-          <div class="input-group w-xxl search">
+        <div class="form-group" >
+          <div class="input-group search-middle">
             <input type="text" ng-model="config.searchData" class="form-control input-sm bg-light no-border padder ng-pristine ng-valid ng-empty ng-touched" placeholder="Search songs and artists..." aria-autocomplete="list" aria-expanded="false" aria-owns="typeahead-16-2068" aria-invalid="false">
               <span class="input-group-btn">
+                <button data-toggle="modal" data-target="#myModal" class="btn btn-sm bg-light"><i class="fa fa-microphone"></i></button>
                 <button ng-click="changeSource()" class="btn btn-sm bg-info"><i class="fa fa-search"></i></button>
               </span>
           </div>
@@ -29,8 +32,9 @@
       </div>
 
       <!--Playlist-->
-      <div class="col w-xxl bg-light dker bg-auto search" >
-        <h4 class="m-n wrapper">Playlist {{config.searchData}}</h4>
+      <div ng-show="displaySearchTop" class="col w-xxl bg-light dker playlist" >
+        <h4 ng-show="audios.length!=0" class="m-n wrapper">Kết quả tìm kiếm "{{config.searchData}}"</h4>
+        <p ng-show="audios.length==0" class="m-n wrapper">Không tìm thấy "{{config.searchData}}". Hãy thử từ khóa khác</p>
         <ul class="list-group no-radius no-border no-bg list-group-lg">
           <li class="list-group-item {{active==$index?'active':''}}" ng-repeat="audio in audios">
             <div class="pull-right m-l">
@@ -52,12 +56,30 @@
       </div>
     </div>
 
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <div class="modal-body list-group-item">
+            <div class=" m-l clear text-ellipsis">Xin mời nói</div>
+            <div class=" m-l">
+              <button class="btn btn-sm bg-light button-voice"><i class="fa fa-3x fa-microphone"></i></button>
+            </divclass>
+          </div>
+        </div>
+
+    </div>
 
   </div>
   <!-- /content -->
 
   <!-- footer -->
-  <div class="app-footer app-footer-fixed" data-ng-include=" 'tpl/music.player.html' ">
+  <div ng-show="audios.length!=0" class="app-footer app-footer-fixed" data-ng-include=" 'tpl/music.player.html' ">
   </div>
   <!-- / footer -->
 

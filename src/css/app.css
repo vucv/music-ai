@@ -5375,7 +5375,56 @@ a.text-#000000:hover {
   }
 }
 
-.search {
+.search-top {
+  float: left;
+  width: 60%;
+  margin: 10px;
+}
+
+.search-middle {
   width: 50%;
-  margin: 100px auto;
+  margin: 10px auto;
+}
+
+.playlist {
+  width: 50%;
+  margin: 10px auto;
+}
+
+.app-footer {
+  margin-left: 0 !important;
+}
+
+.button-voice {
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#myModal {
+  transition: visibility 0s linear 0.218s, opacity 0.218s, background-color 0.218s;
+}
+
+#myModal .modal-content {
+  position: fixed;
+  width: 100%;
+  border-radius: 0;
+}
+
+#myModal .modal-body {
+  max-width: 800px;
+  margin: auto;
+  border: none;
+}
+
+#myModal .modal-body div {
+  display: table-cell;
+  width: 80%;
+  margin: auto;
+  text-align: center;
 }

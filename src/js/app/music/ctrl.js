@@ -2,55 +2,8 @@ app.controller('MusicCtrl',
   ["$sce",'$scope','musicServices', function ($sce, $scope,musicServices) {
     $scope.API = null;
     $scope.active = 0;
-      $scope.searchData='';
-    $scope.searchText = function () {
-        if($scope.searchData){
-            musicServices.getDataSearch($scope.searchData).then(function (data) {
-                console.log(data);
-                $scope.audios = data.playlist;
-                $scope.config = {
-                    sources: $scope.audios[0].sources,
-                    title: $scope.audios[0].title,
-                    repeat: false,
-                    shuffle: false,
-                    autoPlay: true,
-                    theme: {
-                        url: "js/app/music/videogular.css"
-                    }
-                };
-            });
-        }
-    };
-
-    $scope.audios = [
-      {
-        title: "1. Lentement",
-        artist:"Miaow",
-        poster: "img/b0.jpg",
-        sources: [
-          {src: $sce.trustAsResourceUrl("http://flatfull.com/themes/assets/musics/Miaow-03-Lentement.mp3"), type: "audio/mpeg"},
-          {src: $sce.trustAsResourceUrl("http://flatfull.com/themes/assets/musics/Miaow-03-Lentement.ogg"), type: "audio/ogg"}
-        ]
-      },
-      {
-        title: "2. Bubble",
-        artist:"Miaow",
-        poster: "img/b1.jpg",
-        sources: [
-          {src: $sce.trustAsResourceUrl("http://flatfull.com/themes/assets/musics/Miaow-07-Bubble.mp3"), type: "audio/mpeg"},
-          {src: $sce.trustAsResourceUrl("http://flatfull.com/themes/assets/musics/Miaow-07-Bubble.ogg"), type: "audio/ogg"}
-        ]
-      },
-      {
-        title: "3. Partir",
-        artist:"Miaow",
-        poster: "img/b2.jpg",
-        sources: [
-          {src: $sce.trustAsResourceUrl("http://flatfull.com/themes/assets/musics/Miaow-09-Partir.mp3"), type: "audio/mpeg"},
-          {src: $sce.trustAsResourceUrl("http://flatfull.com/themes/assets/musics/Miaow-09-Partir.ogg"), type: "audio/ogg"}
-        ]
-      }
-    ];
+    $scope.displaySearchTop= false;
+    $scope.audios = [];
 
     $scope.config = {
         searchData: "",
@@ -69,26 +22,29 @@ app.controller('MusicCtrl',
       if($scope.config.searchData){
           musicServices.getDataSearch($scope.config.searchData).then(function (data) {
               console.log(data);
-              $scope.audios=[];
-              $scope.API.stop();
-              data.playlist.forEach(function (playlist) {
-                  var audio = {
-                      title: playlist.title,
-                      artist: playlist.artist,
-                      poster: "img/b0.jpg",
-                      sources: [
-                          {
-                              src: $sce.trustAsResourceUrl(playlist.src),
-                              type: "audio/mpeg"
-                          }
-                      ]
-                  };
-                  $scope.audios.push(audio);
-              })
+              if(data && data.playlist) {
+                  $scope.audios = [];
+                  $scope.API.stop();
+                  data.playlist.forEach(function (playlist) {
+                      var audio = {
+                          title: playlist.title,
+                          artist: playlist.artist,
+                          poster: "img/b0.jpg",
+                          sources: [
+                              {
+                                  src: $sce.trustAsResourceUrl(playlist.src),
+                                  type: "audio/mpeg"
+                              }
+                          ]
+                      };
+                      $scope.audios.push(audio);
+                  })
 
-              $scope.active =0;
-              $scope.setActive(0);
+                  $scope.active = 0;
+                  $scope.setActive(0);
+              }
           });
+          $scope.displaySearchTop = true;
       }
 
   }
