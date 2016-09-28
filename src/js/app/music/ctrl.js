@@ -4,9 +4,11 @@ app.controller('MusicCtrl',
     $scope.active = 0;
     $scope.displaySearchTop= false;
     $scope.audios = [];
+      $scope.lastSearchText="";
 
     $scope.config = {
         searchData: "",
+        isVoiceSearch: false,
       // sources: $scope.audios[0].sources,
       // title: $scope.audios[0].title,
       repeat: false,
@@ -17,11 +19,47 @@ app.controller('MusicCtrl',
       }
     };
 
+
   $scope.changeSource = function (source) {
       // source should be an array of objects with src and type
+      if($scope.config.isRecording){
+          recorder.stop();
+          recorder.exportWAV(function(s) {
+              audio.src = window.URL.createObjectURL(s);
+              $scope.config.searchData = "";
+              $scope.lastSearchText="bằng giọng nói";
+              musicServices.getDataSearch($scope.config.searchData,s).then(function (data) {
+                  $scope.config.isRecording = false;
+                  console.log(data);
+                  if(data && data.playlist) {
+                      $scope.audios = [];
+                      $scope.API.stop();
+                      data.playlist.forEach(function (playlist) {
+                          var audio = {
+                              title: playlist.title,
+                              artist: playlist.artist,
+                              poster: "img/b0.jpg",
+                              sources: [
+                                  {
+                                      src: $sce.trustAsResourceUrl(playlist.src),
+                                      type: "audio/mpeg"
+                                  }
+                              ]
+                          };
+                          $scope.audios.push(audio);
+                      })
+
+                      $scope.active = 0;
+                      $scope.setActive(0);
+                  }
+              });
+              $scope.displaySearchTop = true;
+          });
+      }
       if($scope.config.searchData){
           musicServices.getDataSearch($scope.config.searchData).then(function (data) {
               console.log(data);
+              $scope.lastSearchText = $scope.config.searchData.toString();
               if(data && data.playlist) {
                   $scope.audios = [];
                   $scope.API.stop();
@@ -47,7 +85,33 @@ app.controller('MusicCtrl',
           $scope.displaySearchTop = true;
       }
 
-  }
+  };
+      var audio = document.getElementById("audio_preview");
+      var context;
+      var recorder;
+      var mediaStreamSource;
+
+
+
+      $scope.onStartRecord = function () {
+          $scope.config.isRecording = true;
+
+          var onFail = function(e) {
+              console.log('Rejected!', e);
+          };
+
+          var onSuccess = function(s) {
+              context = new AudioContext();
+              mediaStreamSource = context.createMediaStreamSource(s);
+              recorder = new Recorder(mediaStreamSource);
+              recorder.record();
+          };
+          if (navigator.getUserMedia) {
+              navigator.getUserMedia({audio: true}, onSuccess, onFail);
+          } else {
+              console.log('navigator.getUserMedia not present');
+          }
+      };
 
     $scope.onPlayerReady = function(API) {
       $scope.API = API;
