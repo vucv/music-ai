@@ -50,8 +50,12 @@ app.controller('MusicCtrl',
                           $scope.audios.push(audio);
                       })
 
-                      $scope.active = 0;
-                      $scope.setActive(0);
+                      if($scope.audios.length != 0){
+                          $scope.active = 0;
+                          $scope.setActive(0);
+                      }else {
+                          $scope.API.stop();
+                      }
                   }
               });
               $scope.displaySearchTop = true;
@@ -81,7 +85,10 @@ app.controller('MusicCtrl',
                   if($scope.audios.length != 0){
                       $scope.active = 0;
                       $scope.setActive(0);
+                  }else {
+                      $scope.API.stop();
                   }
+
               }
           });
           $scope.displaySearchTop = true;
