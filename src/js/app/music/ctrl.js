@@ -1,5 +1,5 @@
 app.controller('MusicCtrl',
-  ["$sce",'$scope','musicServices', function ($sce, $scope,musicServices) {
+  ["$sce",'$scope','toaster','musicServices', function ($sce, $scope,toaster, musicServices) {
     $scope.API = null;
     $scope.active = 0;
     $scope.displaySearchTop= false;
@@ -31,6 +31,7 @@ app.controller('MusicCtrl',
               musicServices.getDataSearch($scope.config.searchData,s).then(function (data) {
                   $scope.config.isRecording = false;
                   console.log(data);
+                  toaster.pop("Server","Server","Nhận dạng giọng nói",2000);
                   if(data && data.playlist) {
                       $scope.audios = [];
                       $scope.API.stop();
@@ -59,10 +60,10 @@ app.controller('MusicCtrl',
       if($scope.config.searchData){
           musicServices.getDataSearch($scope.config.searchData).then(function (data) {
               console.log(data);
+              toaster.pop("Server","Server" ,"Từ khóa " + $scope.config.searchData,2000);
               $scope.lastSearchText = $scope.config.searchData.toString();
               if(data && data.playlist) {
                   $scope.audios = [];
-                  $scope.API.stop();
                   data.playlist.forEach(function (playlist) {
                       var audio = {
                           title: playlist.title,
@@ -77,9 +78,10 @@ app.controller('MusicCtrl',
                       };
                       $scope.audios.push(audio);
                   })
-
-                  $scope.active = 0;
-                  $scope.setActive(0);
+                  if($scope.audios.length != 0){
+                      $scope.active = 0;
+                      $scope.setActive(0);
+                  }
               }
           });
           $scope.displaySearchTop = true;

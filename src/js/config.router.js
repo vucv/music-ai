@@ -377,7 +377,8 @@ angular.module('app')
                             'com.2fdevs.videogular.plugins.poster',
                             'com.2fdevs.videogular.plugins.buffering',
                             'js/app/music/ctrl.js', 
-                            'js/app/music/theme.css'
+                            'js/app/music/theme.css',
+                            'toaster', 'js/controllers/toaster.js'
                           ])
               })
                   .state('music.home', {
