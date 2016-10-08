@@ -66,16 +66,16 @@ app.controller('MusicCtrl',
               console.log(data);
               toaster.pop("Server","Server" ,"Từ khóa " + $scope.config.searchData,2000);
               $scope.lastSearchText = $scope.config.searchData.toString();
-              if(data && data.playlist) {
+              if(data && data.songs) {
                   $scope.audios = [];
-                  data.playlist.forEach(function (playlist) {
+                  data.songs.forEach(function (song,index) {
                       var audio = {
-                          title: playlist.title,
-                          artist: playlist.artist,
+                          title: "Bài hát " + index,
+                          artist: "Ca sĩ",
                           poster: "img/b0.jpg",
                           sources: [
                               {
-                                  src: $sce.trustAsResourceUrl(playlist.src),
+                                  src: $sce.trustAsResourceUrl(song),
                                   type: "audio/mpeg"
                               }
                           ]

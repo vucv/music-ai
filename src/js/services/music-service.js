@@ -2,16 +2,13 @@
 angular.module('music.services',[])
     .factory('musicServices', ['$http',function ($http) {
         var self = this;
-
+        // Default guest
+        var user = {"token":"-Wf-X9MMn5hgSz7Rq3nxyg7iXiERvA6dmRFZvVUtpk8Q"};
         self.getDataSearch = function (textSearch, fileWav, playStatus) {
             return $http({
+                headers: {'Content-Type': 'application/json'},
                 method: 'GET',
-                url: '/someUrl',
-                data: {
-                    playStatus: playStatus,
-                    fileWav: fileWav,
-                    text: textSearch
-                }
+                url: 'http://pos.onstaging.xyz/songs?token='+user.token+'&keywords='+textSearch
             }).then(function successCallback(response) {
                 // this callback will be called asynchronously
                 // when the response is available
@@ -33,65 +30,9 @@ angular.module('music.services',[])
 
         var dataSample = {
             "BXH": {
-                "intent": "Play",
-                "playlist": [
-                    {
-                        title: "Chúng Ta Không Thuộc Về Nhau",
-                        artist: "Sơn Tùng M-TP",
-                        poster: "img/b0.jpg",
-                        src: "http://s82.stream.nixcdn.com/871d41a14de97c31bed015bb4d468ec4/57ecf45e/NhacCuaTui925/ChungTaKhongThuocVeNhau-SonTungMTP-4528181.mp3"
-
-                    },
-                    {
-                        title: "Góc Ban Công",
-                        artist: "Vũ Cát Tường",
-                        poster: "img/b0.jpg",
-                        src: "http://f9.stream.nixcdn.com/e506433c483153eadb35df731914bf7b/57ecf45e/NhacCuaTui926/GocBanCong-VuCatTuong-4567007.mp3"
-                    },
-                    {
-                        title: "Đổi Thay",
-                        artist: "Hồ Quang Hiếu",
-                        poster: "img/b0.jpg",
-                        src: "http://f9.stream.nixcdn.com/db5e87e036c70715d854627a19ac171c/57ecf45e/NhacCuaTui926/DoiThay-HoQuangHieu-4563803.mp3"
-                    },
-                    {
-                        title: "Chúng Ta Không Thuộc Về Nhau 1",
-                        artist: "Sơn Tùng M-TP",
-                        poster: "img/b0.jpg",
-                        src: "http://s82.stream.nixcdn.com/871d41a14de97c31bed015bb4d468ec4/57ecf45e/NhacCuaTui925/ChungTaKhongThuocVeNhau-SonTungMTP-4528181.mp3"
-
-                    },
-                    {
-                        title: "Góc Ban Công 1",
-                        artist: "Vũ Cát Tường",
-                        poster: "img/b0.jpg",
-                        src: "http://f9.stream.nixcdn.com/e506433c483153eadb35df731914bf7b/57ecf45e/NhacCuaTui926/GocBanCong-VuCatTuong-4567007.mp3"
-                    },
-                    {
-                        title: "Đổi Thay 1",
-                        artist: "Hồ Quang Hiếu",
-                        poster: "img/b0.jpg",
-                        src: "http://f9.stream.nixcdn.com/db5e87e036c70715d854627a19ac171c/57ecf45e/NhacCuaTui926/DoiThay-HoQuangHieu-4563803.mp3"
-                    },
-                    {
-                        title: "Chúng Ta Không Thuộc Về Nhau 2",
-                        artist: "Sơn Tùng M-TP",
-                        poster: "img/b0.jpg",
-                        src: "http://s82.stream.nixcdn.com/871d41a14de97c31bed015bb4d468ec4/57ecf45e/NhacCuaTui925/ChungTaKhongThuocVeNhau-SonTungMTP-4528181.mp3"
-
-                    },
-                    {
-                        title: "Góc Ban Công 2",
-                        artist: "Vũ Cát Tường",
-                        poster: "img/b0.jpg",
-                        src: "http://f9.stream.nixcdn.com/e506433c483153eadb35df731914bf7b/57ecf45e/NhacCuaTui926/GocBanCong-VuCatTuong-4567007.mp3"
-                    },
-                    {
-                        title: "Đổi Thay 3",
-                        artist: "Hồ Quang Hiếu",
-                        poster: "img/b0.jpg",
-                        src: "http://f9.stream.nixcdn.com/db5e87e036c70715d854627a19ac171c/57ecf45e/NhacCuaTui926/DoiThay-HoQuangHieu-4563803.mp3"
-                    }
+                "songs": [
+                    "http://api.mp3.zing.vn/api/mobile/download/song/LGJGTLGNADNNDNETLDJTDGLG",
+                    "http://api.mp3.zing.vn/api/mobile/download/song/LGJGTLGNVNANEVXTLDJTDGLG"
                 ]
             },
             "truong vu": {
